@@ -1,13 +1,15 @@
 import pygame
 
 # ----- CONSTANTS
-BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-YELLOW = (255, 255, 0)
-SKY_BLUE = (95, 165, 228)
+GREEN = (78, 255, 87)
+YELLOW = (241, 255, 0)
+BLUE = (80, 255, 239)
+PURPLE = (203, 0, 255)
+RED = (237, 28, 36)
 WIDTH = 800
 HEIGHT = 600
-TITLE = "<You're title here>"
+TITLE = "<Space Invaders>"
 
 
 def main():
