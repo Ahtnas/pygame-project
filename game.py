@@ -9,9 +9,9 @@ from os.path import abspath, dirname
 from random import choice
 
 BASE_PATH = abspath(dirname(__file__))
-FONT_PATH = BASE_PATH + '/fonts/'
-IMAGE_PATH = BASE_PATH + '/images/'
-SOUND_PATH = BASE_PATH + '/sounds/'
+FONT_PATH = BASE_PATH + '/FONT/'
+IMAGE_PATH = BASE_PATH + '/IMAGES/'
+SOUND_PATH = BASE_PATH + '/SOUNDS/'
 
 # Colors (R, G, B)
 WHITE = (255, 255, 255)
@@ -20,6 +20,7 @@ YELLOW = (241, 255, 0)
 BLUE = (80, 255, 239)
 PURPLE = (203, 0, 255)
 RED = (237, 28, 36)
+TITLE = "Space Invaders"
 
 SCREEN = display.set_mode((800, 600))
 FONT = FONT_PATH + 'space_invaders.ttf'
