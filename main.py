@@ -7,6 +7,7 @@ YELLOW = (241, 255, 0)
 BLUE = (80, 255, 239)
 PURPLE = (203, 0, 255)
 RED = (237, 28, 36)
+BLACK = (0, 0, 0)
 WIDTH = 800
 HEIGHT = 600
 TITLE = "<Space Invaders>"
