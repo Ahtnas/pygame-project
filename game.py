@@ -9,7 +9,7 @@ mixer.init()
 pygame.init()
 
 
-#define fps
+# define fps
 clock = pygame.time.Clock()
 fps = 60
 
@@ -21,12 +21,12 @@ screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption('Space Invaders')
 
 
-#define fonts
+# define fonts
 font30 = pygame.font.SysFont('Constantia', 30)
 font40 = pygame.font.SysFont('Constantia', 40)
 
 
-#load sounds
+# load sounds
 explosion_fx = pygame.mixer.Sound("SOUNDS/explosion.wav")
 explosion_fx.set_volume(0.25)
 
@@ -37,37 +37,37 @@ laser_fx = pygame.mixer.Sound("SOUNDS/laser.wav")
 laser_fx.set_volume(0.25)
 
 
-#define game variables
+# define game variables
 rows = 5
 cols = 5
-alien_cooldown = 1000#bullet cooldown in milliseconds
+alien_cooldown = 1000 # bullet cooldown in milliseconds
 last_alien_shot = pygame.time.get_ticks()
 countdown = 3
 last_count = pygame.time.get_ticks()
-game_over = 0#0 is no game over, 1 means player has won, -1 means player has lost
+game_over = 0 # 0 is no game over, 1 means player has won, -1 means player has lost
 
-#define colours
+# define colours
 red = (255, 0, 0)
 green = (0, 255, 0)
 white = (255, 255, 255)
 
 
 
-#load image
+# load image
 bg = pygame.image.load("IMAGES/bg.png")
 
 def draw_bg():
 	screen.blit(bg, (0, 0))
 
 
-#define function for creating text
+# define function for creating text
 def draw_text(text, font, text_col, x, y):
 	img = font.render(text, True, text_col)
 	screen.blit(img, (x, y))
 
 
 
-#create spaceship class
+# create spaceship class
 class Spaceship(pygame.sprite.Sprite):
 	def __init__(self, x, y, health):
 		pygame.sprite.Sprite.__init__(self)
@@ -80,23 +80,23 @@ class Spaceship(pygame.sprite.Sprite):
 
 
 	def update(self):
-		#set movement speed
+		# set movement speed
 		speed = 8
-		#set a cooldown variable
-		cooldown = 500 #milliseconds
+		# set a cooldown variable
+		cooldown = 500 # milliseconds
 		game_over = 0
 
 
-		#get key press
+		# get key press
 		key = pygame.key.get_pressed()
 		if key[pygame.K_LEFT] and self.rect.left > 0:
 			self.rect.x -= speed
 		if key[pygame.K_RIGHT] and self.rect.right < screen_width:
 			self.rect.x += speed
 
-		#record current time
+		# record current time
 		time_now = pygame.time.get_ticks()
-		#shoot
+		# shoot
 		if key[pygame.K_SPACE] and time_now - self.last_shot > cooldown:
 			laser_fx.play()
 			bullet = Bullets(self.rect.centerx, self.rect.top)
@@ -104,11 +104,11 @@ class Spaceship(pygame.sprite.Sprite):
 			self.last_shot = time_now
 
 
-		#update mask
+		# update mask
 		self.mask = pygame.mask.from_surface(self.image)
 
 
-		#draw health bar
+		# draw health bar
 		pygame.draw.rect(screen, red, (self.rect.x, (self.rect.bottom + 10), self.rect.width, 15))
 		if self.health_remaining > 0:
 			pygame.draw.rect(screen, green, (self.rect.x, (self.rect.bottom + 10), int(self.rect.width * (self.health_remaining / self.health_start)), 15))
@@ -176,7 +176,7 @@ class Alien_Bullets(pygame.sprite.Sprite):
 		if pygame.sprite.spritecollide(self, spaceship_group, False, pygame.sprite.collide_mask):
 			self.kill()
 			explosion2_fx.play()
-			#reduce spaceship health
+			# reduce spaceship health
 			spaceship.health_remaining -= 1
 			explosion = Explosion(self.rect.centerx, self.rect.centery, 1)
 			explosion_group.add(explosion)
@@ -197,7 +197,7 @@ class Explosion(pygame.sprite.Sprite):
 				img = pygame.transform.scale(img, (40, 40))
 			if size == 3:
 				img = pygame.transform.scale(img, (160, 160))
-			#add the image to the list
+			# add the image to the list
 			self.images.append(img)
 		self.index = 0
 		self.image = self.images[self.index]
@@ -208,7 +208,7 @@ class Explosion(pygame.sprite.Sprite):
 
 	def update(self):
 		explosion_speed = 3
-		#update explosion animation
+		# update explosion animation
 		self.counter += 1
 
 		if self.counter >= explosion_speed and self.index < len(self.images) - 1:
@@ -216,14 +216,14 @@ class Explosion(pygame.sprite.Sprite):
 			self.index += 1
 			self.image = self.images[self.index]
 
-		#if the animation is complete, delete explosion
+		# if the animation is complete, delete explosion
 		if self.index >= len(self.images) - 1 and self.counter >= explosion_speed:
 			self.kill()
 
 
 
 
-#create sprite groups
+# create sprite groups
 spaceship_group = pygame.sprite.Group()
 bullet_group = pygame.sprite.Group()
 alien_group = pygame.sprite.Group()
@@ -232,7 +232,7 @@ explosion_group = pygame.sprite.Group()
 
 
 def create_aliens():
-	#generate aliens
+	# generate aliens
 	for row in range(rows):
 		for item in range(cols):
 			alien = Aliens(100 + item * 100, 100 + row * 70)
@@ -241,7 +241,7 @@ def create_aliens():
 create_aliens()
 
 
-#create player
+# create player
 spaceship = Spaceship(int(screen_width / 2), screen_height - 100, 3)
 spaceship_group.add(spaceship)
 
@@ -252,30 +252,30 @@ while run:
 
 	clock.tick(fps)
 
-	#draw background
+	# draw background
 	draw_bg()
 
 
 	if countdown == 0:
-		#create random alien bullets
-		#record current time
+		# create random alien bullets
+		# record current time
 		time_now = pygame.time.get_ticks()
-		#shoot
+		# shoot
 		if time_now - last_alien_shot > alien_cooldown and len(alien_bullet_group) < 5 and len(alien_group) > 0:
 			attacking_alien = random.choice(alien_group.sprites())
 			alien_bullet = Alien_Bullets(attacking_alien.rect.centerx, attacking_alien.rect.bottom)
 			alien_bullet_group.add(alien_bullet)
 			last_alien_shot = time_now
 
-		#check if all the aliens have been killed
+		# check if all the aliens have been killed
 		if len(alien_group) == 0:
 			game_over = 1
 
 		if game_over == 0:
-			#update spaceship
+			# update spaceship
 			game_over = spaceship.update()
 
-			#update sprite groups
+			# update sprite groups
 			bullet_group.update()
 			alien_group.update()
 			alien_bullet_group.update()
@@ -294,11 +294,11 @@ while run:
 			last_count = count_timer
 
 
-	#update explosion group
+	# update explosion group
 	explosion_group.update()
 
 
-	#draw sprite groups
+	# draw sprite groups
 	spaceship_group.draw(screen)
 	bullet_group.draw(screen)
 	alien_group.draw(screen)
@@ -306,7 +306,7 @@ while run:
 	explosion_group.draw(screen)
 
 
-	#event handlers
+	# event handlers
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			run = False
