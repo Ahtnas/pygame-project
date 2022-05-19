@@ -3,6 +3,9 @@ from pygame import mixer
 from pygame.locals import *
 import random
 
+# Space Invaders
+# Author Josh Santha
+
 
 def main():
     mixer.init()
